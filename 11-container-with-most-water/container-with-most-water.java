@@ -1,34 +1,32 @@
 class Solution {
     public int maxArea(int[] height) {
-        int left = 0;                    // Start pointer
-        int right = height.length - 1;   // End pointer
-        int maxWater = 0;                // To store the maximum water
-
-        while (left < right) {
-            // Calculate the height of the smaller line
-            int minHeight;
-            if (height[left] < height[right]) {
-                minHeight = height[left];
-            } else {
-                minHeight = height[right];
+        // optimal approach
+        int maxWater =0;
+        int left =0;
+        int right = height.length-1;
+        while(left<right){
+            // minimum height
+            int shorterHeight;
+            if(height[left]<height[right]){
+                shorterHeight = height[left];
+            }else {
+                shorterHeight = height[right];
             }
-
-            // Calculate the current water
-            int water = minHeight * (right - left);
-
-            // Update the maximum water if current is greater
-            if (water > maxWater) {
+            // water between left and right bar
+            int water = shorterHeight*(right-left);
+            if(water>maxWater){
                 maxWater = water;
             }
-
-            // Move the shorter line inward
-            if (height[left] < height[right]) {
+            // if left smaller then increase it 
+            if(height[left]<height[right]){
                 left++;
-            } else {
+            }
+            // if right is bigger then decrease it 
+            else {
                 right--;
             }
         }
-
-        return maxWater; // Return the maximum water found
+        return maxWater;
+        
     }
 }
