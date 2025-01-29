@@ -1,25 +1,30 @@
-import java.util.*;
-
 class Solution {
     public List<List<Integer>> threeSum(int[] nums) {
-        Set<List<Integer>> resultSet = new HashSet<>();
-        
-        for (int i = 0; i < nums.length - 1; i++) {
-            Set<Integer> seen = new HashSet<>();
-            for (int j = i + 1; j < nums.length; j++) {
-                int complement = -(nums[i] + nums[j]);
-                
-                // If the complement exists in the set, we've found a triplet
-                if (seen.contains(complement)) {
-                    List<Integer> triplet = Arrays.asList(nums[i], nums[j], complement);
-                    Collections.sort(triplet);  // Sort the triplet to ensure uniqueness
-                    resultSet.add(triplet);
-                }
-                seen.add(nums[j]);  // Add the current number to the set
+        // optimal solution for this 
+        // creating hashset to store unique element only
+       Set<List<Integer>>unique = new HashSet<>();
+       for(int i=0; i<nums.length; i++){
+        // creating hashset to check if element already present or not 
+        Set<Integer> seen = new HashSet<>();
+        for(int j=i+1;  j<nums.length; j++){
+            // int k = -1+1=0 so that third element is 0 thats why doing -
+            int complement = -(nums[i]+nums[j]);
+            if(seen.contains(complement)){
+                // creating a list to store the triplet
+                List<Integer> triplets = Arrays.asList(nums[i],nums[j],complement);
+                // sorting to reduce duplicacy 
+                Collections.sort(triplets);
+                // adding to the hashset
+                unique.add(triplets);
             }
+            // for next iteration adding nums[j] to the seen to tell the program that we allready got j
+            seen.add(nums[j]);
+            
         }
-
-        // Convert HashSet to List for the final result
-        return new ArrayList<>(resultSet);
+       }
+        // returning the hashset as list
+       return new ArrayList<>(unique);
+    
+        
     }
 }
