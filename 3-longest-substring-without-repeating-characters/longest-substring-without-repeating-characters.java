@@ -1,36 +1,36 @@
 class Solution {
     public int lengthOfLongestSubstring(String s) {
-      int maxLength = 0;  // Start with 0 as initial maximum length
-        int start = 0;  // Start pointer for sliding window
-        if(s==null || s.isEmpty()){
+     if(s==null || s.isEmpty()){
             return 0;
         }
-
-        // Using HashSet to store unique characters in the current window
+        int start =0;
+        int maxLength= Integer.MIN_VALUE;
+        /*
+        generate all the substring
+        then create hashset to check duplicacy
+        then get current Character
+        if hshset contains current character then remove the currentCharacter
+        and shring the window by push start one step ahead start++
+        then come out the loop and add current character back to seen to be sure that it is unique and not repeated
+        then get currentLength
+         */
         HashSet<Character> seen = new HashSet<>();
-
-        for (int end = 0; end < s.length(); end++) {
-            // Get the current character in the string
-            char currentChar = s.charAt(end);
-
-            // If the character is already in the set, shrink the window from the left
-            while (seen.contains(currentChar)) {
-                seen.remove(s.charAt(start));  // Remove character at start
-                start++;  // Move the start pointer forward
+        for(int end = start; end<s.length(); end++){
+            char currentCharacter = s.charAt(end);
+            while(seen.contains(currentCharacter)){
+                seen.remove(s.charAt(start));
+                // shrink the window
+                start++;
             }
-
-            // Add the current character to the HashSet
-            seen.add(currentChar);
-
-            // Calculate the length of the current window
-            int currentLength = end - start + 1;
-
-            // Update maxLength without using Math.max
-            if (currentLength > maxLength) {
+            seen.add(currentCharacter);
+            int currentLength = end - start+1;
+            if(currentLength>maxLength){
                 maxLength = currentLength;
             }
-        }
 
-        return maxLength;  // Return the maximum length of the substring
+
+        }
+        return maxLength;
     }
-}
+    }
+
