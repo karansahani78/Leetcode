@@ -1,21 +1,22 @@
 class Solution {
     public int subarraySum(int[] nums, int k) {
-        // bruteforce approach our main goal is to find out start and end of the sub array
-    int result =0;
-    // for start
-    for(int start =0; start<nums.length; start++){
-        int currentSum =0;
-        for(int end = start; end<nums.length; end++){
-            currentSum = currentSum+ nums[end];
-            if(currentSum==k){
-                result++;
-            }
+        int count = 0;
 
+        // Start Kadane-style processing from each index
+        for (int i = 0; i < nums.length; i++) {
+            int sum = 0;
+
+            // Expand the subarray starting from `i`
+            for (int j = i; j < nums.length; j++) {
+                sum += nums[j]; // Extend the subarray by adding nums[j]
+
+                // Check if this subarray sums to k
+                if (sum == k) {
+                    count++;
+                }
+            }
         }
 
-    }
-    return result;
-        
-        
+        return count;
     }
 }
