@@ -1,22 +1,37 @@
 class Solution {
     public int totalFruit(int[] fruits) {
-        Map<Integer, Integer> fruitCounts = new HashMap<>();
-        int start = 0, maxFruits = 0;
+        int lastFruit = -1;
+        int secondLastFruit = -1;
+        int lastFruitCount = 0;
+        int currentMax = 0;
+        int maxFruits = 0;
 
-        for (int end = 0; end < fruits.length; end++) {
-            fruitCounts.put(fruits[end], fruitCounts.getOrDefault(fruits[end], 0) + 1);
-
-            while (fruitCounts.size() > 2) {
-                fruitCounts.put(fruits[start], fruitCounts.get(fruits[start]) - 1);
-                if (fruitCounts.get(fruits[start]) == 0) {
-                    fruitCounts.remove(fruits[start]);
-                }
-                start++;
+        for (int fruit : fruits) {
+            // Extend the current window if the fruit is the same as one of the last two
+            if (fruit == lastFruit || fruit == secondLastFruit) {
+                currentMax++;
+            } else {
+                // Start a new window by counting from the last fruit's occurrence
+                currentMax = lastFruitCount + 1;
             }
 
-            maxFruits = Math.max(maxFruits, end - start + 1);
+            // Update last fruit count or reset it
+            if (fruit == lastFruit) {
+                lastFruitCount++;
+            } else {
+                lastFruitCount = 1;
+            }
+
+            // Update the fruits being tracked
+            if (fruit != lastFruit) {
+                secondLastFruit = lastFruit;
+                lastFruit = fruit;
+            }
+
+            // Update the max fruits collected
+            maxFruits = Math.max(maxFruits, currentMax);
         }
 
         return maxFruits;
     }
-}
+    }
