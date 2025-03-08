@@ -1,19 +1,21 @@
 class Solution {
     public int numSubarraysWithSum(int[] nums, int goal) {
-        // doing with prefix sum
-        int ps =0;
-        int result =0;
-        Map<Integer,Integer>map= new HashMap<>();
-        
-        map.put(0,1);
-        for(int i=0; i<nums.length; i++){
-            ps+=nums[i];
-            
-            result+=map.getOrDefault(ps-goal,0);
-            map.put(ps,map.getOrDefault(ps,0)+1);
-
+        return numSubarrayWithAtMost(nums,goal)-numSubarrayWithAtMost(nums,goal-1);
+    }
+    public int numSubarrayWithAtMost(int []nums,int goal){
+        int sum=0;
+        int start=0;
+        int count=0;
+        for(int end = start; end<nums.length; end++){
+            // expansion phase
+            sum= sum+nums[end];
+            while(sum>goal && start<=end){
+                sum= sum-nums[start];
+                start++;
+            }
+            // valid subarray count
+            count = count + (end-start+1);
         }
-        return result;
-        
+        return count;
     }
 }
