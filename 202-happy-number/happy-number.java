@@ -1,22 +1,25 @@
+import java.util.HashSet;
+
 class Solution {
     public boolean isHappy(int n) {
-        int slow = n;
-        int fast = getNext(n);
-
-        while (fast != 1 && slow != fast) {
-            slow = getNext(slow);
-            fast = getNext(getNext(fast));
+        HashSet<Integer> seen = new HashSet<>();
+        
+        while (n != 1) {
+            if (seen.contains(n)) {
+                return false; // Cycle detected
+            }
+            seen.add(n);
+            
+            // Compute sum of squares of digits inline
+            int sum = 0, temp = n;
+            while (temp > 0) {
+                int digit = temp % 10;
+                sum += digit * digit;
+                temp /= 10;
+            }
+            
+            n = sum; // Update n with the new value
         }
-        return fast == 1;
-    }
-
-    private int getNext(int n) {
-        int sum = 0;
-        while (n > 0) {
-            int digit = n % 10;
-            sum += digit * digit;
-            n /= 10;
-        }
-        return sum;
+        return true;
     }
 }
