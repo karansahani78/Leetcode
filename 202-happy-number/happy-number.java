@@ -1,17 +1,13 @@
-import java.util.HashSet;
-
 class Solution {
     public boolean isHappy(int n) {
-        HashSet<Integer> seen = new HashSet<>();
-        
-        while (n != 1) {
-            if (seen.contains(n)) {
-                return false; // Cycle detected
-            }
-            seen.add(n);
-            n = getNext(n);
+        int slow = n;
+        int fast = getNext(n);
+
+        while (fast != 1 && slow != fast) {
+            slow = getNext(slow);
+            fast = getNext(getNext(fast));
         }
-        return true;
+        return fast == 1;
     }
 
     private int getNext(int n) {
