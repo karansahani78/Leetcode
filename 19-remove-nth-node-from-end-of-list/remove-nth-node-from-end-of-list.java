@@ -10,26 +10,23 @@
  */
 class Solution {
     public ListNode removeNthFromEnd(ListNode head, int n) {
-        // we have to find the length of list
-        int length =0;
+        Stack<ListNode>stack = new Stack<>();
         ListNode temp = head;
         while(temp!=null){
-            length++;
+            stack.push(temp);
             temp = temp.next;
         }
-        // what if we need to remove head 
-        if(n==length){
+        // Pop `n` times to reach the target node
+        for(int i=0; i<n; i++){
+            stack.pop();
+        }
+        // If stack is empty, it means we are removing the head
+        if (stack.isEmpty()) {
             return head.next;
         }
-        else {
-            // reset the temp for next iteration
-            temp = head;
-            for(int i=1; i<length-n; i++){
-                temp = temp.next;
-            }
-            // now we can simply skip that node 
-            temp.next = temp.next.next;
-        }
+        // findn out the previouse node then linked it with nex.next to skip the nth node
+        ListNode previouseNode = stack.peek();
+        previouseNode.next = previouseNode.next.next;
         return head;
         
     }
