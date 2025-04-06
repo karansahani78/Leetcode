@@ -27,7 +27,7 @@ public class Solution {
                 pB=pB.next;
             }
         }
-        return pA;
+        return pB;
         
     }
 }
