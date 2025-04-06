@@ -8,26 +8,25 @@
  *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
  * }
  */
-
 class Solution {
+    private ListNode start;
+
     public boolean isPalindrome(ListNode head) {
-        Stack<Integer> stack = new Stack<>();
-        ListNode temp = head;
+        start = head;           // This will move from the beginning
+        return checkPalindrome(head); // Start checking from the end
+    }
 
-        // Push all elements into the stack
-        while (temp != null) {
-            stack.push(temp.val);
-            temp = temp.next;
-        }
+    private boolean checkPalindrome(ListNode end) {
+        if (end == null) return true;
 
-        // Reset temp to head to compare stack values
-        temp = head;
-        while (temp != null) {
-            if (temp.val != stack.pop()) {
-                return false;
-            }
-            temp = temp.next;
-        }
+        // Recursively go to the end of the list
+        if (!checkPalindrome(end.next)) return false;
+
+        // Compare current start and end values
+        if (start.val != end.val) return false;
+
+        // Move start pointer forward
+        start = start.next;
 
         return true;
     }
