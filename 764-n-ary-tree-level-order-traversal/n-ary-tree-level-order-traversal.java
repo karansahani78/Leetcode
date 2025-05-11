@@ -15,8 +15,7 @@ class Node {
         children = _children;
     }
 };
-*/
-
+*/ // using normal loop rather than advance for each loop
 class Solution {
     public List<List<Integer>> levelOrder(Node root) {
         List<List<Integer>> result = new ArrayList<>();
@@ -31,7 +30,8 @@ class Solution {
             for(int i=0; i<currentLevelSize; i++ ){ 
             Node currentNode = q.poll();
             currentLevel.add(currentNode.val);
-            for(Node child: currentNode.children){
+            for(int j=0; j<currentNode.children.size(); j++){ 
+                Node child = currentNode.children.get(j);
                 if(child!=null){
                     q.offer(child);
 
