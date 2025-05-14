@@ -14,16 +14,14 @@
  * }
  */
 class Solution {
-    int i;
+    int i; Map<Integer, Integer> m = new HashMap<>();
     public TreeNode buildTree(int[] p, int[] in) {
-        return f(p, in, 0, in.length - 1);
+        for (int j = 0; j < in.length; j++) m.put(in[j], j);
+        return f(p, 0, in.length - 1);
     }
-    TreeNode f(int[] p, int[] in, int l, int r) {
+    TreeNode f(int[] p, int l, int r) {
         if (l > r) return null;
-        TreeNode n = new TreeNode(p[i++]);
-        int m = l; while (in[m] != n.val) m++;
-        n.left = f(p, in, l, m - 1);
-        n.right = f(p, in, m + 1, r);
-        return n;
+        int v = p[i++], x = m.get(v);
+        return new TreeNode(v, f(p, l, x - 1), f(p, x + 1, r));
     }
 }
