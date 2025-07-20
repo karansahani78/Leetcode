@@ -10,23 +10,20 @@
  */
 class Solution {
     public ListNode removeNthFromEnd(ListNode head, int n) {
-        Stack<ListNode>stack = new Stack<>();
-        ListNode temp = head;
-        while(temp!=null){
-            stack.push(temp);
-            temp = temp.next;
+        ListNode curr = head;
+        int len = 0;
+        while(curr!=null){
+            curr = curr.next;
+            len++;
         }
-        // Pop `n` times to reach the target node
-        for(int i=0; i<n; i++){
-            stack.pop();
-        }
-        // If stack is empty, it means we are removing the head
-        if (stack.isEmpty()) {
+        if(len==n){
             return head.next;
         }
-        // findn out the previouse node then linked it with nex.next to skip the nth node
-        ListNode previouseNode = stack.peek();
-        previouseNode.next = previouseNode.next.next;
+        ListNode temp =head;
+        for(int i=0; i<len-n-1; i++){
+            temp = temp.next;
+        }
+        temp.next = temp.next.next;
         return head;
         
     }
