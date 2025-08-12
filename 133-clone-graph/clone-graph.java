@@ -19,23 +19,32 @@ class Node {
 */
 
 class Solution {
-
-     Map<Node, Node> visited = new HashMap<>();
-     
     public Node cloneGraph(Node node) {
-        if(node==null) return null;
-        if(visited.containsKey(node)){
-            return visited.get(node);
-        }
-        // create a new node having same value as original node
-        Node clonedNode = new Node(node.val);
-        visited.put(node, clonedNode);
+        if (node == null) return null;
 
-        for(Node neighbor:node.neighbors){
-            clonedNode.neighbors.add(cloneGraph(neighbor));
+        Map<Node, Node> map = new HashMap<>(); // old -> new
+
+        // Create a copy of the starting node
+        Node clone = new Node(node.val);
+        map.put(node, clone);
+
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(node);
+
+        while (!queue.isEmpty()) {
+            Node current = queue.poll();
+
+            for (Node neighbor : current.neighbors) {
+                if (!map.containsKey(neighbor)) {
+                    // Clone the neighbor and put it in the map
+                    map.put(neighbor, new Node(neighbor.val));
+                    queue.add(neighbor);
+                }
+                // Add the cloned neighbor to the cloned node's neighbors
+                map.get(current).neighbors.add(map.get(neighbor));
+            }
         }
 
-        return clonedNode;
-        
+        return clone;
     }
 }
