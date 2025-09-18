@@ -15,14 +15,16 @@ public class Solution {
         ListNode fast = head;
         while(fast!=null && fast.next!=null){
             slow = slow.next;
-            fast= fast.next.next;
+            fast = fast.next.next;
             if(slow==fast){
-                slow =head;
-                while(slow!=fast){
+                // fount the meeting point now we need to find the starting point of the cycle keep slow as the duplicate value  
+                ListNode startingPoint = head;
+                while(startingPoint!=slow){
                     slow = slow.next;
-                    fast = fast.next;
+                    startingPoint=startingPoint.next;
+
                 }
-                return slow;
+                return startingPoint;
             }
         }
         return null;
